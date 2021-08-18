@@ -62,6 +62,7 @@ list_objs = [f1, f2, f3]
 
 
 # ## Create the problem object
+# More details here: https://github.com/industrial-optimization-group/desdeo-problem/blob/master/docs/notebooks/data_problem.ipynb
 
 
 problem = MOProblem(variables=list_vars, objectives=list_objs)
