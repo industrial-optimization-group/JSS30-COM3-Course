@@ -26,14 +26,20 @@ from desdeo_emo.EAs import NSGAIII
 
 
 def f_1(x):
-    term1 = ((x[:,0] - 2) ** 2) / 2
-    term2 = ((x[:,1] + 1) ** 2) / 13
-    return term1 + term2 + 3
+    r = x[:,0]
+    h = x[:,1]
+    #area_cylinder = 2 * np.pi * r**2 + 2 * np.pi * r
+    area_icecreamcone = np.pi * r * np.sqrt( h**2 + r**2)
+    return area_icecreamcone
+
 
 def f_2(x):
-    term1 = ((x[:, 0] + x[:, 1] - 3) ** 2) / 36
-    term2 = ((-x[:, 0] + x[:, 1] + 2) ** 2) / 8
-    return term1 + term2 - 17
+    r = x[:, 0]
+    h = x[:, 1]
+    #volume_cylinder= (np.pi) * r**2 * h
+    volume_icecreamcone = 1.0 / 3.0 * (np.pi) * r ** 2 * h
+    #volume_filled_icecreamcone=1.0 /3.0 * (np.pi) * r**2 * h +4.0 / 3.0 *np.pi *r**3
+    return -volume_icecreamcone
 
 #def f_3(x):
 #    term1 = ((x[:, 0] + (2 * x[:, 1]) - 1) ** 2) / 175
@@ -107,5 +113,18 @@ individuals, solutions = evolver.end()
 #pd.DataFrame(solutions).to_csv("MOP7_true_front.csv")
 # pip install matplotlib (in terminal)
 # import matplotlib.pyplot as plt
-plt.scatter(solutions[:,0],solutions[:,1])
+
+
+# Add a random sample to the plot
+from numpy import random
+X = random.rand(1000,1)*(10.0)
+Y = random.rand(1000,1)*(5.0)
+randomsample = np.hstack((X,Y))
+for i in range(1000):
+  F1randomsample=f_1(randomsample)
+  F2randomsample=f_2(randomsample)
+print(randomsample)
+plt.scatter(F1randomsample,-F2randomsample)
+
+plt.scatter(solutions[:,0],-solutions[:,1])
 plt.show()
